@@ -1,0 +1,181 @@
+<!DOCTYPE HTML>
+<!--
+	Project Detail Page for Cloud-Native Portfolio (Final Polished Version)
+-->
+<html>
+	<head>
+		<title>Project Deep Dive: Cloud-Native Portfolio</title>
+		<meta charset="utf-8" />
+		<meta name="robots" content="noindex, nofollow">
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+	</head>
+	<body class="no-sidebar is-preload">
+		<div id="page-wrapper">
+
+			<!-- Header -->
+			<section id="header">
+				<h1><a href="index.html">Aravindakrishnan V</a></h1>
+				<p>Visitors: <span id="visitor-count">...</span></p>
+				<nav id="nav">
+					<ul>
+						<li><a href="index.html">Home</a></li>
+						<li class="current"><a href="projects.html">Projects</a></li>
+						<li><a href="education.html">Education & Skills</a></li>
+					</ul>
+				</nav>
+			</section>
+
+			<!-- Main -->
+			<section id="main">
+				<div class="container">
+					<article class="box post">
+						<header>
+							<h2>Cloud-Native Portfolio</h2>
+						</header>
+
+						<section>
+							<header>
+								<h3>Project Philosophy & Goal</h3>
+							</header>
+							<p>
+								The primary objective of this project was to architect, build, and deploy a secure, scalable, and fully automated serverless web application on AWS. This project serves as a tangible demonstration of core cloud engineering and DevOps principles, from foundational security setup and infrastructure provisioning with Terraform to implementing a complete CI/CD pipeline for automated deployments.
+							</p>
+						</section>
+
+						<hr/>
+
+						<section>
+							<header>
+								<h3>Solution Architecture</h3>
+								<p>The application is a full-stack serverless solution. The frontend is a static website delivered globally via a CDN, which communicates with a serverless backend API to power dynamic features like the unique visitor counter.</p>
+							</header>				
+                            <div style="margin-top: 2em; text-align: center;">
+								<h4>Frontend Architecture</h4>
+								<p>The delivery layer, responsible for getting the website to the user quickly and securely.</p>
+								<span class="image fit"><img src="images/architecture-diagram.png" alt="Frontend Architecture Diagram" style="max-width: 800px; margin: 0 auto;"/></span>
+								<h4 style="margin-top: 2em;">Backend Architecture</h4>
+								<p>The application logic layer, responsible for processing data and managing state.</p>
+								<span class="image fit"><img src="images/backend.png" alt="Backend Architecture Diagram" style="max-width: 600px; margin: 0 auto;"/></span>
+                            </div>
+                        </section>
+						
+						<hr/>
+
+						<section>
+							<header>
+								<h3>Technical Deep Dive</h3>
+							</header>
+							
+							<h4>Part 1: The Frontend (The Delivery Layer)</h4>
+							<p>The frontend infrastructure is designed for high performance, security, and low cost by offloading all traffic to the AWS global edge network.</p>
+							<ul>
+								<li><strong>Amazon S3:</strong> The static website content (HTML, CSS, JavaScript, images) is stored in an S3 bucket. The bucket is configured to be completely private, with all public access blocked. This is a critical security measure to ensure the integrity of the site content.</li>
+								<li><strong>Amazon CloudFront:</strong> A global Content Delivery Network (CDN) serves as the public entry point. It fetches content from the private S3 bucket and caches it at edge locations worldwide. This provides low-latency delivery to users and shields the origin from direct traffic. All HTTP requests are automatically redirected to HTTPS.</li>
+								<li><strong>Origin Access Control (OAC):</strong> A secure handshake between CloudFront and S3 is established using OAC. The S3 bucket policy is configured to only allow access from my specific CloudFront distribution's ARN. This is the modern best practice, ensuring that users cannot bypass the CDN to access the bucket content directly.</li>
+								<li><strong>AWS Certificate Manager (ACM):</strong> A free, auto-renewing SSL/TLS certificate is provisioned in the mandatory `us-east-1` region. This certificate is attached to the CloudFront distribution to enable HTTPS, ensuring all traffic between the user and the CDN is encrypted.</li>
+								<li><strong>Amazon Route 53:</strong> The DNS for the custom domain (`aravindakrishnan.click`) is managed by Route 53. Special Alias records are used to point the root domain and the `www` subdomain to the CloudFront distribution, which is more reliable than traditional CNAME records.</li>
+							</ul>
+
+							<h4>Part 2: The Backend API (The Application Logic)</h4>
+							<p>The backend is not just a simple hit counter; it's a robust, privacy-conscious system that correctly distinguishes between page hits and unique visitors. This design showcases a deeper understanding of serverless patterns and data handling.</p>
+							<ul>
+								<li><strong>AWS Lambda:</strong> A serverless function written in Python serves as the core of the backend logic. To protect visitor privacy, incoming IP addresses are first pseudonymized using a salted hash (HMAC-SHA256) before being processed. The secret for the hash is securely managed as a Lambda environment variable, separating configuration from code.</li>
+								<li><strong>Amazon DynamoDB:</strong> A serverless NoSQL database provides scalable, low-latency persistence with on-demand billing. A single-table design is used to efficiently store both the aggregate visitor count (in one item) and the unique hashes of previously seen visitors (in separate items). This design allows for a fast and cost-effective `GetItem` check to determine if a visitor is new before incrementing the count. The `UpdateItem` operation is used for its atomicity, which prevents race conditions during concurrent requests.</li>
+								<li><strong>Amazon API Gateway:</strong> A secure REST API provides the public HTTP endpoint for the frontend. A Lambda Proxy Integration is used to pass the entire request details, including the source IP, to the backend function. CORS is meticulously configured with a MOCK integration for the `OPTIONS` method to handle browser preflight requests, ensuring secure cross-origin communication.</li>
+							</ul>
+
+							<h4>Part 3: The Automation Layer (Infrastructure as Code)</h4>
+							<p>The entire project—both frontend and backend—is defined declaratively using Terraform. This approach eliminates manual configuration, ensures consistency across environments, and allows the entire infrastructure to be version-controlled in Git.</p>
+							<ul>
+								<li><strong>Terraform:</strong> The project is organized into two distinct Terraform projects: `frontend` and `backend`. This separation of concerns makes the infrastructure easier to manage and update independently.</li>
+								<li><strong>Key Challenges & Learnings:</strong> The automation process revealed several real-world challenges. For instance, a circular dependency was resolved by using a more flexible IAM policy ARN for CloudWatch logs. A critical `InvalidBucketAclWithObjectOwnership` error was debugged by removing the legacy `aws_s3_bucket_acl` resource in favor of a modern, policy-based approach, demonstrating a deep understanding of S3 security evolution.</li>
+							</ul>
+
+							<h4>Part 4: The Deployment Engine (CI/CD Pipeline - In Progress)</h4>
+							<p>The final phase of the project is to build a complete CI/CD pipeline using GitHub Actions. This will fully automate the testing and deployment of both the frontend and backend repositories.</p>
+							<ul>
+								<li><strong>Backend Pipeline:</strong> The workflow will automatically run Python unit tests. On success, it will use a secure OIDC connection to authenticate with AWS and run `terraform apply` to deploy the backend.</li>
+								<li><strong>Frontend Pipeline:</strong> The workflow will first run `terraform apply` to ensure the infrastructure is in place. It will then use the AWS CLI to run `s3 sync` to upload the latest website files. The final, critical step will be to create a `cloudfront create-invalidation` to purge the CDN cache, ensuring users see the latest content immediately.</li>
+							</ul>
+						
+						</section>
+						
+						<footer>
+							<ul class="actions" style="display: flex; justify-content: space-between; align-items: center;">
+								<li>
+									<a href="projects.html" class="button alt">Back to Projects</a>
+								</li>
+								<li style="display: flex; gap: 1em;">
+									<a href="https://github.com/arkhiVd/portfolio-frontend" class="button icon brands fa-github">Frontend Repo</a>
+									<a href="https://github.com/arkhiVd/portfolio-backend" class="button icon brands fa-github">Backend Repo</a>
+								</li>
+							</ul>
+						</footer>
+					</article>
+				</div>
+			</section>
+
+			<!-- Footer -->
+			<section id="footer">
+				<div class="container">
+					<div class="row">
+						<!-- Get In Touch Column -->
+						<div class="col-4 col-12-medium">
+							<section>
+								<header>
+									<h2>Get In Touch</h2>
+								</header>
+								<p>
+									I am actively seeking new opportunities and would love to connect. Please feel free to reach out.
+								</p>
+							</section>
+						</div>
+						<!-- Mail Column -->
+						<div class="col-4 col-12-medium">
+							<section>
+								<header>
+									<h2>Mail</h2>
+								</header>
+								<p><a href="mailto:aravindakrishnanv@tutamail.com">aravindakrishnanv@tutamail.com</a></p>
+							</section>
+						</div>
+						<!-- Connect Column -->
+						<div class="col-4 col-12-medium">
+							<section>
+								<header>
+									<h2>Connect</h2>
+								</header>
+								<div class="connect-icons">
+									<!-- LinkedIn -->
+									<a class="icon brands fa-linkedin-in" href="https://www.linkedin.com/in/aravindakrishnan-v-2b0651218"><span class="label">LinkedIn</span></a>
+									<!-- GitHub -->
+									<a class="icon brands fa-github" href="https://github.com/arkhiVd"><span class="label">GitHub</span></a>
+								</div>
+							</section>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-12">
+							<!-- Copyright -->
+							<div id="copyright">
+								<ul class="links">
+									<li>&copy; Aravindakrishnan V. All rights reserved.</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</div>
+
+		<!-- Scripts -->
+		<script src="assets/js/visitorscript.js"></script>
+		<script src="assets/js/jquery.min.js"></script>
+		<script src="assets/js/jquery.dropotron.min.js"></script>
+		<script src="assets/js/browser.min.js"></script>
+		<script src="assets/js/breakpoints.min.js"></script>
+		<script src="assets/js/util.js"></script>
+		<script src="assets/js/main.js"></script>
+	</body>
+</html>

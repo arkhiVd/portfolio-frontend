@@ -81,8 +81,6 @@ While deployment is fully automated, the infrastructure can be managed from a lo
     terraform plan
     terraform apply
     ```
-    *Note: A `terraform.tfvars` file may be needed to supply values for variables.*
-
 ---
 
 ## Future Improvements

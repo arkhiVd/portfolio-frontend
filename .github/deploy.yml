@@ -1,0 +1,47 @@
+name: Deploy Frontend Infrastructure
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy:
+    name: Deploy to AWS
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::615201069679:role/GitHubActions_PortfolioFrontend_Role
+          aws-region: us-east-1
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Plan
+        run: terraform plan -input=false
+
+      - name: Terraform Apply
+        id: tf_apply
+        run: terraform apply -auto-approve -input=false
+
+      - name: Sync Website Files to S3
+        run: |
+          aws s3 sync my-website-files/ s3://${{ steps.tf_apply.outputs.s3_bucket_name }} --delete
+
+      
+      - name: Invalidate CloudFront Cache
+        run: |
+          aws cloudfront create-invalidation --distribution-id ${{ steps.tf_apply.outputs.cloudfront_distribution_id }} --paths "/*"

@@ -1,7 +1,4 @@
 <!DOCTYPE HTML>
-<!--
-	Project Detail Page for Cloud-Native Portfolio (Final Polished Version)
--->
 <html>
 	<head>
 		<title>Project Deep Dive: Cloud-Native Portfolio</title>
@@ -16,7 +13,7 @@
 			<!-- Header -->
 			<section id="header">
 				<h1><a href="index.html">Aravindakrishnan V</a></h1>
-				<p>Visitors: <span id="visitor-count">...</span></p>
+				<p> Visitor Count: <span id="visitor-count">...</span></p>
 				<nav id="nav">
 					<ul>
 						<li><a href="index.html">Home</a></li>
@@ -31,7 +28,8 @@
 				<div class="container">
 					<article class="box post">
 						<header>
-							<h2>Cloud-Native Portfolio</h2>
+							<h2>Cloud-Native Portfolio on AWS</h2>
+							<p>A comprehensive demonstration of modern cloud engineering and DevOps practices.</p>
 						</header>
 
 						<section>
@@ -39,16 +37,96 @@
 								<h3>Project Philosophy & Goal</h3>
 							</header>
 							<p>
-								The primary objective of this project was to architect, build, and deploy a secure, scalable, and fully automated serverless web application on AWS. This project serves as a tangible demonstration of core cloud engineering and DevOps principles, from foundational security setup and infrastructure provisioning with Terraform to implementing a complete CI/CD pipeline for automated deployments.
+								The primary objective was not just to build a website, but to architect, deploy, and automate a complete full-stack serverless application on AWS. This project serves as a tangible portfolio of skills in cloud infrastructure, security, automation, and CI/CD, mirroring the standards and best practices of a professional enterprise environment.
 							</p>
 						</section>
 
 						<hr/>
 
+						<!-- Key Achievements Section -->
+						<section>
+							<header>
+								<h3>Key Achievements</h3>
+							</header>
+							<ul style="list-style: none; padding-left: 0;">
+								<li style="position: relative; padding-left: 2em; margin-bottom: 1em;">
+									<span class="icon solid fa-shield-alt" style="position: absolute; left: 0; top: 0.2em;"></span>
+									<strong>Security-First Design:</strong> Implemented a secure, private-by-default architecture using a private S3 bucket, CloudFront OAC, and the Principle of Least Privilege for all IAM roles.
+								</li>
+								<li style="position: relative; padding-left: 2em; margin-bottom: 1em;">
+									<span class="icon solid fa-server" style="position: absolute; left: 0; top: 0.2em;"></span>
+									<strong>Fully Serverless Architecture:</strong> Built a cost-effective and highly scalable application using AWS Lambda for compute, DynamoDB for data, and API Gateway for the API layer, eliminating all server management.
+								</li>
+								<li style="position: relative; padding-left: 2em; margin-bottom: 1em;">
+									<span class="icon solid fa-code" style="position: absolute; left: 0; top: 0.2em;"></span>
+									<strong>100% Infrastructure as Code (IaC):</strong> Defined the entire frontend and backend infrastructure declaratively in Terraform, enabling repeatable, version-controlled, and error-free deployments.
+								</li>
+								<li style="position: relative; padding-left: 2em; margin-bottom: 0;">
+									<span class="icon solid fa-cogs" style="position: absolute; left: 0; top: 0.2em;"></span>
+									<strong>Automated CI/CD Pipelines:</strong> Created "push-to-deploy" workflows with GitHub Actions, incorporating automated testing, security scanning, and seamless deployments for both infrastructure and application code.
+								</li>
+							</ul>
+						</section>
+
+						<hr/>
+
+						<!-- Technology Stack Section -->
+						<section>
+							<header>
+								<h3>Technology Stack</h3>
+							</header>
+							<div class="row">
+								<div class="col-4 col-12-medium">
+									<section class="box feature" style="height: 100%;">
+										<i class="icon solid fa-desktop" style="font-size: 2em; margin-bottom: 0.5em;"></i>
+										<h3>Frontend</h3>
+										<ul>
+											<li>Amazon S3</li>
+											<li>CloudFront (CDN)</li>
+											<li>Route 53 (DNS)</li>
+											<li>ACM (SSL Certificates)</li>
+											<li>HTML5 & CSS3</li>
+											<li>JavaScript (Fetch API)</li>
+										</ul>
+									</section>
+								</div>
+								<div class="col-4 col-12-medium">
+									<section class="box feature" style="height: 100%;">
+										<i class="icon solid fa-bolt" style="font-size: 2em; margin-bottom: 0.5em;"></i>
+										<h3>Backend</h3>
+										<ul>
+											<li>AWS Lambda (Python 3.9)</li>
+											<li>Amazon DynamoDB</li>
+											<li>Amazon API Gateway</li>
+											<li>IAM (Roles & Policies)</li>
+											<li>Boto3 SDK</li>
+										</ul>
+									</section>
+								</div>
+								<div class="col-4 col-12-medium">
+									<section class="box feature" style="height: 100%;">
+										<i class="icon solid fa-tools" style="font-size: 2em; margin-bottom: 0.5em;"></i>
+										<h3>DevOps & Automation</h3>
+										<ul>
+											<li>Terraform (IaC)</li>
+											<li>GitHub Actions (CI/CD)</li>
+											<li>Git & GitHub</li>
+											<li>AWS CLI</li>
+											<li>OIDC Authentication</li>
+											<li>tfsec Security Scanner</li>
+										</ul>
+									</section>
+								</div>
+							</div>
+						</section>
+
+						<hr/>
+						
+						<!-- Architecture Diagrams Section -->
 						<section>
 							<header>
 								<h3>Solution Architecture</h3>
-								<p>The application is a full-stack serverless solution. The frontend is a static website delivered globally via a CDN, which communicates with a serverless backend API to power dynamic features like the unique visitor counter.</p>
+								<p>The application is split into two distinct layers: a global delivery network for the frontend and a regional serverless stack for the backend API.</p>
 							</header>				
                             <div style="margin-top: 2em; text-align: center;">
 								<h4>Frontend Architecture</h4>
@@ -62,42 +140,65 @@
 						
 						<hr/>
 
+						<!-- Technical Deep Dive Section -->
 						<section>
 							<header>
 								<h3>Technical Deep Dive</h3>
 							</header>
 							
-							<h4>Part 1: The Frontend (The Delivery Layer)</h4>
-							<p>The frontend infrastructure is designed for high performance, security, and low cost by offloading all traffic to the AWS global edge network.</p>
-							<ul>
-								<li><strong>Amazon S3:</strong> The static website content (HTML, CSS, JavaScript, images) is stored in an S3 bucket. The bucket is configured to be completely private, with all public access blocked. This is a critical security measure to ensure the integrity of the site content.</li>
-								<li><strong>Amazon CloudFront:</strong> A global Content Delivery Network (CDN) serves as the public entry point. It fetches content from the private S3 bucket and caches it at edge locations worldwide. This provides low-latency delivery to users and shields the origin from direct traffic. All HTTP requests are automatically redirected to HTTPS.</li>
-								<li><strong>Origin Access Control (OAC):</strong> A secure handshake between CloudFront and S3 is established using OAC. The S3 bucket policy is configured to only allow access from my specific CloudFront distribution's ARN. This is the modern best practice, ensuring that users cannot bypass the CDN to access the bucket content directly.</li>
-								<li><strong>AWS Certificate Manager (ACM):</strong> A free, auto-renewing SSL/TLS certificate is provisioned in the mandatory `us-east-1` region. This certificate is attached to the CloudFront distribution to enable HTTPS, ensuring all traffic between the user and the CDN is encrypted.</li>
-								<li><strong>Amazon Route 53:</strong> The DNS for the custom domain (`aravindakrishnan.click`) is managed by Route 53. Special Alias records are used to point the root domain and the `www` subdomain to the CloudFront distribution, which is more reliable than traditional CNAME records.</li>
-							</ul>
+							<section style="margin-top: 2.5em;">
+								<header>
+									<h4><span class="icon solid fa-globe-americas"></span> The Frontend (Delivery Layer)</h4>
+								</header>
+								<p>The frontend infrastructure is designed for high performance, security, and low cost by offloading all traffic to the AWS global edge network.</p>
+								<ul>
+									<li><strong>Private S3 Bucket:</strong> Stores all static assets (HTML, CSS, JS) in a secure, non-public bucket, enforcing a security-first posture.</li>
+									<li><strong>CloudFront CDN:</strong> Acts as the public entry point, caching content globally for low-latency delivery. It's configured to redirect all HTTP traffic to HTTPS for end-to-end encryption.</li>
+									<li><strong>Origin Access Control (OAC):</strong> Establishes a secure connection, ensuring that the S3 bucket can only be accessed by my specific CloudFront distribution, preventing direct access to the origin.</li>
+									<li><strong>ACM & Route 53:</strong> A free, auto-renewing SSL certificate from ACM is attached to CloudFront, and Route 53 Alias records provide a reliable DNS pointer from my custom domain to the CDN.</li>
+								</ul>
+							</section>
 
-							<h4>Part 2: The Backend API (The Application Logic)</h4>
-							<p>The backend is not just a simple hit counter; it's a robust, privacy-conscious system that correctly distinguishes between page hits and unique visitors. This design showcases a deeper understanding of serverless patterns and data handling.</p>
-							<ul>
-								<li><strong>AWS Lambda:</strong> A serverless function written in Python serves as the core of the backend logic. To protect visitor privacy, incoming IP addresses are first pseudonymized using a salted hash (HMAC-SHA256) before being processed. The secret for the hash is securely managed as a Lambda environment variable, separating configuration from code.</li>
-								<li><strong>Amazon DynamoDB:</strong> A serverless NoSQL database provides scalable, low-latency persistence with on-demand billing. A single-table design is used to efficiently store both the aggregate visitor count (in one item) and the unique hashes of previously seen visitors (in separate items). This design allows for a fast and cost-effective `GetItem` check to determine if a visitor is new before incrementing the count. The `UpdateItem` operation is used for its atomicity, which prevents race conditions during concurrent requests.</li>
-								<li><strong>Amazon API Gateway:</strong> A secure REST API provides the public HTTP endpoint for the frontend. A Lambda Proxy Integration is used to pass the entire request details, including the source IP, to the backend function. CORS is meticulously configured with a MOCK integration for the `OPTIONS` method to handle browser preflight requests, ensuring secure cross-origin communication.</li>
-							</ul>
+							<section style="margin-top: 2.5em;">
+								<header>
+									<h4><span class="icon solid fa-database"></span> The Backend API (Application Logic)</h4>
+								</header>
+								<p>The backend is an intelligent unique visitor counter, not a simple hit counter, showcasing a deeper understanding of serverless patterns and data privacy.</p>
+								<ul>
+									<li><strong>AWS Lambda (Python):</strong> The core logic resides in a serverless function. It pseudonymizes visitor IP addresses using a salted hash (HMAC-SHA256) to protect privacy, with the secret key securely managed via Lambda environment variables.</li>
+									<li><strong>DynamoDB NoSQL Database:</strong> Utilizes a single-table design for maximum efficiency. One item holds the aggregate visitor count, while other items store visitor IP hashes. This allows for a fast, cost-effective `GetItem` check to determine if a visitor is new before atomically incrementing the counter with an `UpdateItem` operation, which prevents race conditions.</li>
+									<li><strong>API Gateway:</strong> Provides a secure REST API endpoint. A Lambda Proxy Integration passes request details (like the source IP) to the function. CORS is meticulously configured to allow secure cross-origin requests from the frontend domain.</li>
+								</ul>
+							</section>
 
-							<h4>Part 3: The Automation Layer (Infrastructure as Code)</h4>
-							<p>The entire project—both frontend and backend—is defined declaratively using Terraform. This approach eliminates manual configuration, ensures consistency across environments, and allows the entire infrastructure to be version-controlled in Git.</p>
-							<ul>
-								<li><strong>Terraform:</strong> The project is organized into two distinct Terraform projects: `frontend` and `backend`. This separation of concerns makes the infrastructure easier to manage and update independently.</li>
-								<li><strong>Key Challenges & Learnings:</strong> The automation process revealed several real-world challenges. For instance, a circular dependency was resolved by using a more flexible IAM policy ARN for CloudWatch logs. A critical `InvalidBucketAclWithObjectOwnership` error was debugged by removing the legacy `aws_s3_bucket_acl` resource in favor of a modern, policy-based approach, demonstrating a deep understanding of S3 security evolution.</li>
-							</ul>
+							<section style="margin-top: 2.5em;">
+								<header>
+									<h4><span class="icon solid fa-file-code"></span> The Automation Layer (Infrastructure as Code)</h4>
+								</header>
+								<p>The entire project is defined declaratively using Terraform, eliminating manual configuration and ensuring the infrastructure is consistent, repeatable, and version-controlled.</p>
+								<ul>
+									<li><strong>Terraform State Management:</strong> A remote S3 backend is used to securely store the Terraform state, a critical practice for team collaboration and CI/CD automation.</li>
+									<li><strong>Modular Design:</strong> The infrastructure is organized into two distinct Terraform projects (`frontend` and `backend`), simplifying management and allowing for independent updates.</li>
+									<li><strong>Problem Solving:</strong> The automation process involved solving real-world challenges, such as debugging S3's modern `BucketOwnerEnforced` setting versus legacy ACLs and using Terraform's implicit dependency graph to resolve circular dependencies between CloudFront and S3.</li>
+								</ul>
+							</section>
 
-							<h4>Part 4: The Deployment Engine (CI/CD Pipeline - In Progress)</h4>
-							<p>The final phase of the project is to build a complete CI/CD pipeline using GitHub Actions. This will fully automate the testing and deployment of both the frontend and backend repositories.</p>
-							<ul>
-								<li><strong>Backend Pipeline:</strong> The workflow will automatically run Python unit tests. On success, it will use a secure OIDC connection to authenticate with AWS and run `terraform apply` to deploy the backend.</li>
-								<li><strong>Frontend Pipeline:</strong> The workflow will first run `terraform apply` to ensure the infrastructure is in place. It will then use the AWS CLI to run `s3 sync` to upload the latest website files. The final, critical step will be to create a `cloudfront create-invalidation` to purge the CDN cache, ensuring users see the latest content immediately.</li>
-							</ul>
+							<section style="margin-top: 2.5em;">
+								<header>
+									<h4><span class="icon solid fa-rocket"></span> The Deployment Engine (CI/CD Pipeline)</h4>
+								</header>
+								<p>Complete "push-to-deploy" CI/CD pipelines were built with GitHub Actions, fully automating the testing and deployment of both the frontend and backend repositories.</p>
+								<ul>
+									<li><strong>Secure Authentication:</strong> The pipelines use a modern, passwordless <strong>OIDC connection</strong> to securely authenticate with AWS, eliminating the need to store long-lived access keys as GitHub secrets.</li>
+									<li><strong>Backend Pipeline:</strong> The workflow enforces quality through automated gates. It first runs Python unit tests and a `tfsec` static analysis scan to catch security misconfigurations. Only after all checks pass does it proceed to `terraform apply` the infrastructure changes.</li>
+									<li><strong>Frontend Pipeline:</strong> This multi-stage process first deploys infrastructure with `terraform apply`. Then, using Terraform `outputs`, it dynamically runs two critical post-deployment steps:
+										<ol style="margin-left: 20px; margin-top: 10px;">
+											<li>An <strong>`aws s3 sync`</strong> command uploads website files, ensuring the bucket is a perfect mirror of the Git repository.</li>
+											<li>An <strong>`aws cloudfront create-invalidation`</strong> command purges the global CDN cache, making new changes live for all users almost instantly.</li>
+										</ol>
+									</li>
+								</ul>
+							</section>
 						
 						</section>
 						

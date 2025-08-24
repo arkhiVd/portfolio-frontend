@@ -676,3 +676,35 @@ body {
     padding-left: 0;
     margin-bottom: 0.8em;
 }
+
+
+.connect-icons a {
+    display: inline-block;
+    text-decoration: none;
+}
+
+.connect-icons svg {
+    width: 32px;
+    height: 32px;
+    fill: var(--color-text);
+    transition: fill 0.2s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.connect-icons a:hover svg {
+    fill: var(--color-primary);
+    transform: translateY(-2px);
+}
+
+.project-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1em;
+    margin-top: 1.5em;
+}
+
+.project-repo-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75em;
+}

@@ -1,88 +1,92 @@
-# Cloud-Native Full-Stack Portfolio Website
+# Terraform Infrastructure for Cloud-Native Frontend
 
-This repository contains the Infrastructure as Code (IaC) for my personal portfolio website, a full-stack, cloud-native application built entirely on AWS and automated with Terraform and GitHub Actions.
+![Terraform](https://img.shields.io/badge/Terraform-7B42BC?style=for-the-badge&logo=terraform&logoColor=white)
+![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-2088FF?style=for-the-badge&logo=github-actions&logoColor=white)
 
-## Demo
+This repository contains the complete Terraform code to deploy a secure, high-performance, and cost-effective frontend for a modern web application on AWS. This infrastructure serves as the delivery layer for my full-stack portfolio project.
 
-You can view the live, deployed website here: **[https://www.aravindakrishnan.click](https://www.aravindakrishnan.click)**
+The backend API infrastructure for the visitor counter can be found in its own repository: **[portfolio-backend](https://github.com/arkhiVd/portfolio-backend)**.
 
----
+## Live Demo
 
-## Architecture
-
-The infrastructure is designed to be serverless, secure, scalable, and fully automated. The frontend is decoupled from the backend, with each having its own CI/CD pipeline for independent deployment.
-
-![Architecture Diagram](my-website-files/images/architecture-diagram.png)
-
-The application flow consists of two main parts:
-
-1.  **Frontend Delivery:** A user requests the domain, which is resolved by **Route 53**. The request is directed to **CloudFront**, which serves the static HTML/CSS/JS content securely from a private **S3 bucket** using Origin Access Control (OAC).
-2.  **Backend API (Visitor Counter):** The JavaScript on the frontend makes a call to an endpoint managed by **API Gateway**. This triggers a **Lambda** function (Python), which interacts with a **DynamoDB** table to read and update the unique visitor count, returning the value to the frontend.
+The infrastructure defined in this repository is live at: **[https://www.aravindakrishnan.click](https://www.aravindakrishnan.click)**
 
 ---
 
-## Tech Stack & Features
+## Frontend Architecture
 
-This project leverages a modern, cloud-native stack:
+The architecture is designed for global low-latency, high availability, and robust security by leveraging the AWS edge network and enforcing a "private-by-default" security posture.
 
-#### **Frontend**
-*   **Static Content Hosting:** Amazon S3
-*   **Content Delivery Network (CDN):** Amazon CloudFront
-*   **DNS & Domain Management:** Amazon Route 53
-*   **SSL/TLS Certificates:** AWS Certificate Manager (ACM)
+![Frontend Architecture Diagram](my-website-files/images/architecture-diagram.png)
 
-#### **Backend (Serverless API)**
-*   **API Endpoint:** Amazon API Gateway (REST API)
-*   **Compute:** AWS Lambda (Python runtime)
-*   **Database:** Amazon DynamoDB (NoSQL)
-
-#### **DevOps & Automation**
-*   **Infrastructure as Code:** Terraform
-*   **CI/CD:** GitHub Actions
-*   **Security Scanning:** `tfsec` for static analysis of Terraform code.
-*   **Secure Authentication:** OpenID Connect (OIDC) for passwordless authentication between GitHub Actions and AWS IAM.
+### Architectural Flow:
+1.  A user accesses the domain `aravindakrishnan.click`.
+2.  **Amazon Route 53** resolves the DNS query and, using an Alias record, points the user to the CloudFront distribution.
+3.  **Amazon CloudFront** serves the website's static assets (HTML, CSS, JS, images) from the nearest edge location, providing the fastest possible load time. All traffic is served over HTTPS.
+4.  If the content is not in the cache, CloudFront securely fetches it from a **private Amazon S3 bucket**.
+5.  **Origin Access Control (OAC)** is used to ensure that the S3 bucket is only accessible by my specific CloudFront distribution, blocking all direct public access.
+6.  The **AWS Certificate Manager (ACM)** provisions and manages the free, auto-renewing SSL/TLS certificate that enables HTTPS.
 
 ---
 
-## Key Features
+## Core Concepts & Key Features
 
-*   **Infrastructure as Code:** The entire infrastructure for both frontend and backend is defined declaratively using Terraform, enabling repeatable and consistent deployments.
-*   **Dual CI/CD Pipelines:**
-    *   Separate GitHub Actions workflows for the frontend and backend, triggered on pushes to the `main` branch.
-    *   Workflows are filtered by paths, so only relevant infrastructure is deployed when a change is made.
-    *   The backend pipeline runs unit tests and a `tfsec` security scan before every deployment.
-*   **Serverless Architecture:** The project is 100% serverless, meaning no servers to manage, automatic scaling, and a pay-for-what-you-use cost model that is highly efficient.
-*   **Security-First Design:**
-    *   The S3 bucket is private, accessible only by CloudFront via **Origin Access Control (OAC)**.
-    *   The GitHub Actions pipelines use secure, short-lived credentials via **OIDC** instead of storing long-lived access keys.
-    *   Automated **`tfsec` scanning** in the CI/CD pipeline prevents insecure infrastructure from being deployed.
+*   **Global Content Delivery:** Uses **Amazon CloudFront** to cache static content at AWS edge locations worldwide, ensuring low-latency access for all users and providing a layer of protection against DDoS attacks.
+*   **Ironclad Security:** The **S3 bucket** is 100% private, with all public access blocked. The S3 bucket policy is configured to only allow `GetObject` requests from the specific CloudFront distribution's ARN via **Origin Access Control (OAC)**, the modern best practice for securing S3 origins.
+*   **Fully Automated DNS & SSL:** **Route 53** manages the DNS with highly reliable **Alias records**. The SSL certificate is provisioned and automatically validated and renewed by **ACM**, ensuring encrypted traffic at no cost.
+*   **Efficient, Automated Content Deployment:** The `aws_s3_object` resource uses a `for_each` loop over a `fileset` to programmatically upload all website files. It also uses the `filemd5()` hash in the `etag` argument to ensure that only changed files are re-uploaded, making deployments faster and more efficient.
+
+---
+
+## CI/CD Pipeline with GitHub Actions
+
+This repository has a "push-to-deploy" CI/CD pipeline that automates the entire deployment process for the frontend infrastructure and application files.
+
+The workflow is triggered on every push to the `main` branch and performs the following steps:
+
+1.  **Secure AWS Authentication:** Uses **OpenID Connect (OIDC)** to request temporary, short-lived credentials from AWS IAM. This passwordless approach is highly secure and avoids storing long-lived access keys as GitHub secrets.
+2.  **Deploy Infrastructure:** Runs `terraform apply` to ensure the S3 bucket, CloudFront distribution, and all other AWS resources are configured according to the code.
+3.  **Sync Website Files:** Executes an `aws s3 sync` command to upload the website's static files to the S3 bucket. It uses the `--delete` flag to ensure the bucket is an exact mirror of the Git repository, removing any old files that are no longer needed.
+4.  **Invalidate CDN Cache:** This is the most critical step for a frontend deployment. The pipeline runs an `aws cloudfront create-invalidation` command with a `/*` path. This purges the old cached content from all CloudFront edge locations globally, ensuring that users see the updated version of the site almost immediately.
+
+---
+
+## Terraform Highlights
+
+This codebase demonstrates several professional Terraform patterns:
+
+*   **Multi-Region Provider Configuration:** Because CloudFront requires ACM certificates to be in the `us-east-1` region, the code defines an aliased AWS provider. This allows the certificate to be managed in `us-east-1` while the primary S3 bucket and other resources are deployed in `ap-south-2`, all from a single codebase.
+*   **Dynamic File Uploads with MIME Types:** A `lookup` function is used with a local map to dynamically set the correct `Content-Type` for each uploaded file based on its extension. This is critical for ensuring browsers correctly render CSS, execute JavaScript, and display images.
+*   **Robust Dependency Management:** The code relies on Terraform's implicit dependency graph. For example, the CloudFront distribution references the certificate validation resource (`aws_acm_certificate_validation`), ensuring Terraform waits for the SSL certificate to be fully issued before attempting to attach it, preventing race conditions.
 
 ---
 
 ## Local Development & Deployment
 
-While deployment is fully automated, the infrastructure can be managed from a local machine with the appropriate credentials.
+While deployment is automated via the CI/CD pipeline, the infrastructure can be managed from a local machine.
 
 1.  **Prerequisites:**
-    *   An AWS account
-    *   Terraform CLI installed
-    *   AWS CLI installed and configured with appropriate permissions (ideally via IAM Identity Center/SSO).
+    *   Terraform CLI (`~> 1.0`)
+    *   AWS CLI
+    *   Configured AWS credentials (e.g., via `aws configure sso`)
 
 2.  **Clone the repository:**
     ```bash
-    git clone https://github.com/arkhiVd/portfolio-project.git
-    cd portfolio-project
+    git clone https://github.com/arkhiVd/portfolio-frontend.git
+    cd portfolio-frontend
     ```
 
-3.  **Deploying a specific environment (e.g., backend):**
+3.  **Prepare Variables:**
+    Create a variables file for your specific domain name.
     ```bash
-    cd backend
+    cp terraform.tfvars.example terraform.tfvars
+    # Edit terraform.tfvars with your own values
+    ```
+
+4.  **Deploy:**
+    Initialize Terraform and apply the configuration.
+    ```bash
     terraform init
     terraform plan
     terraform apply
     ```
----
-
-## Future Improvements
-*   **Ephemeral Preview Environments:** Implement a separate GitHub Actions workflow that deploys a temporary, complete copy of the application for every Pull Request and runs `terraform destroy` on merge/close.
-*   **End-to-End Testing:** Add a testing framework like Cypress or Playwright to the frontend pipeline to run automated browser tests against the live application after deployment.

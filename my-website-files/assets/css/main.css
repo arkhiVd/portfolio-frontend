@@ -707,3 +707,25 @@ body {
     flex-wrap: wrap;
     gap: 0.75em;
 }
+
+.visitor-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 5px 12px;
+    background-color: var(--color-border);
+    border-radius: 15px;
+    font-size: 0.9em;
+    font-weight: 500;
+    color: var(--color-text-strong);
+}
+
+.visitor-badge svg {
+    width: 1.3em;
+    height: 1.3em;
+    fill: currentColor;
+    margin-right: 8px;
+}
+
+#visitor-count {
+    margin-left: 0.3em;
+}

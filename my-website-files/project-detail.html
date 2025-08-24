@@ -6,6 +6,7 @@
 		<meta name="robots" content="noindex, nofollow">
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
+		<link rel="stylesheet" type='text/css' href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
 	</head>
 	<body class="no-sidebar is-preload">
 		<div id="page-wrapper">
@@ -30,7 +31,9 @@
 						<header>
 							<h2>Cloud-Native Portfolio on AWS</h2>
 							<p>A comprehensive demonstration of modern cloud engineering and DevOps practices.</p>
+							
 						</header>
+						<!-- Technologies Used Section (Corrected) -->
 
 						<section>
 							<header>
@@ -77,10 +80,10 @@
 							</header>
 							<div class="row">
 								<div class="col-4 col-12-medium">
-									<section class="box feature" style="height: 100%;">
-										<i class="icon solid fa-desktop" style="font-size: 2em; margin-bottom: 0.5em;"></i>
+									<section class="box feature-box">
+										<i class="icon solid fa-desktop"></i>
 										<h3>Frontend</h3>
-										<ul>
+										<ul class="tech-list">
 											<li>Amazon S3</li>
 											<li>CloudFront (CDN)</li>
 											<li>Route 53 (DNS)</li>
@@ -91,10 +94,10 @@
 									</section>
 								</div>
 								<div class="col-4 col-12-medium">
-									<section class="box feature" style="height: 100%;">
-										<i class="icon solid fa-bolt" style="font-size: 2em; margin-bottom: 0.5em;"></i>
+									<section class="box feature-box">
+										<i class="icon solid fa-bolt"></i>
 										<h3>Backend</h3>
-										<ul>
+										<ul class="tech-list">
 											<li>AWS Lambda (Python 3.9)</li>
 											<li>Amazon DynamoDB</li>
 											<li>Amazon API Gateway</li>
@@ -104,10 +107,10 @@
 									</section>
 								</div>
 								<div class="col-4 col-12-medium">
-									<section class="box feature" style="height: 100%;">
-										<i class="icon solid fa-tools" style="font-size: 2em; margin-bottom: 0.5em;"></i>
+									<section class="box feature-box">
+										<i class="icon solid fa-tools"></i>
 										<h3>DevOps & Automation</h3>
-										<ul>
+										<ul class="tech-list">
 											<li>Terraform (IaC)</li>
 											<li>GitHub Actions (CI/CD)</li>
 											<li>Git & GitHub</li>
@@ -202,12 +205,12 @@
 						
 						</section>
 						
-						<footer>
-							<ul class="actions" style="display: flex; justify-content: space-between; align-items: center;">
+						<footer class="project-footer-actions">
+							<ul class="actions">
 								<li>
 									<a href="projects.html" class="button alt">Back to Projects</a>
 								</li>
-								<li style="display: flex; gap: 1em;">
+								<li class="repo-buttons">
 									<a href="https://github.com/arkhiVd/portfolio-frontend" class="button icon brands fa-github">Frontend Repo</a>
 									<a href="https://github.com/arkhiVd/portfolio-backend" class="button icon brands fa-github">Backend Repo</a>
 								</li>
@@ -271,12 +274,10 @@
 		</div>
 
 		<!-- Scripts -->
-		<script src="assets/js/visitorscript.js"></script>
+		
 		<script src="assets/js/jquery.min.js"></script>
-		<script src="assets/js/jquery.dropotron.min.js"></script>
-		<script src="assets/js/browser.min.js"></script>
-		<script src="assets/js/breakpoints.min.js"></script>
-		<script src="assets/js/util.js"></script>
+		<script src="assets/js/nav-panel.js"></script>
 		<script src="assets/js/main.js"></script>
+		<script src="assets/js/visitorscript.js"></script>
 	</body>
 </html>

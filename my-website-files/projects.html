@@ -1,5 +1,4 @@
 <!DOCTYPE HTML>
-<!-- projects page -->
 <html>
 	<head>
 		<title>Projects - AV</title>    
@@ -31,13 +30,20 @@
 						<div class="col-12">
 							<!-- Main Content Area -->
 							<article class="box post">
-								<div class="project-item" style="margin-bottom: 2em;">
-								<h3><strong>SOLO PROJECTS</strong></h3>
+
+								<div class="project-item">
+									<h3><strong>SOLO PROJECTS</strong></h3>
 								</div>
-								<hr/>
-								<div class="project-item" style="margin-bottom: 2em;">
+
+								<div class="project-item">
 									<h3>Cloud-Native Portfolio (This Website)</h3>
-									<p><strong>Technologies:</strong> AWS (S3, CloudFront, Lambda, API Gateway, DynamoDB), Terraform, CI/CD</p>
+									<section class="tech-icons">
+										<img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" title="AWS" alt="AWS Logo" />
+										<img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/terraform/terraform-original.svg" title="Terraform" alt="Terraform Logo" />
+										<img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg" title="Git" alt="Git Logo" />
+										<img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original.svg" title="GitHub" alt="GitHub Logo" />
+										<img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/githubactions/githubactions-original.svg" title="GitHub Actions" alt="GitHub Actions Logo" />
+									</section>
 									<p>Architected and deployed a serverless portfolio website on AWS to demonstrate full-stack cloud engineering skills. The frontend is hosted on S3 and delivered globally via a secure CloudFront CDN with a custom domain. Currently developing the backend API using Python (Lambda), API Gateway, and DynamoDB to power a real-time visitor counter. The entire infrastructure is being defined as code using Terraform and automated via a GitHub Actions CI/CD pipeline.</p>
 									<ul class="actions">
 										<li><a href="project-detail.html" class="button">Learn More</a></li>
@@ -45,27 +51,17 @@
 										<li><a href="https://github.com/arkhiVd/portfolio-backend" class="button alt icon brands fa-github">Backend</a></li>
 									</ul>
 								</div>
-								<!--<hr/> 
-								<div class="project-item" style="margin-bottom: 2em;">
-									<h3>AI-Powered Interactive Chess Coaching</h3>
-									<p><strong>Technologies:</strong> Python, Artificial intelligence, Stockfish engine</p>
-									<p>Developed an AI-powered interactive chess coaching board to revolutionize chess education by providing an engaging and personalized audio coaching experience. It operates by detecting piece movements on the board, which are then analyzed in real-time. Coaching insights are subsequently translated into natural language and delivered as audio feedback, blending tactile play with intelligent guidance.</p>
-								</div> -->
-								<hr/> 
-								<div class="project-item" style="margin-bottom: 2em;">
+								
+								<div class="project-item">
 									<h3>Self-Hosted Private Cloud Sync For Obsidian</h3>
 									<p><strong>Technologies:</strong> Docker, Linux System Administration</p>
 									<p>Architected and deployed a private, end-to-end encrypted, real-time sync service on a headless Arch Linux server to provide a secure, self-hosted cloud solution for personal data. The service operates by running a containerized CouchDB database managed by Docker and Docker-Compose. The deployment involved securing the service at the network layer through ip-tables and Docker firewall.</p>
-									<!--I Will Add the link later
-									<a href="#" class="button alt">View on GitHub</a> -->
 								</div>
-								<hr/> 
-								<div class="project-item" style="margin-bottom: 2em;">
+								
+								<div class="project-item">
 									<h3>Network Automation Scripts (In Progress)</h3>
 									<p><strong>Technologies:</strong> Python, Netmiko, GNS3, Git</p>
 									<p>Developing Python scripts with Netmiko to automate the backup of network device configurations in a simulated GNS3 environment, with versioning in Git.</p>
-									<!--I Will Add link to it after completing
-									<a href="" class="button alt">starting soon</a>-->
 								</div>
 
 							</article>
@@ -73,13 +69,11 @@
 					</div>
 				</div>
 			</section>
-
 			
 			<!-- Footer -->
 			<section id="footer">
 				<div class="container">
 					<div class="row">
-						<!-- Get In Touch Column -->
 						<div class="col-4 col-12-medium">
 							<section>
 								<header>
@@ -90,7 +84,6 @@
 								</p>
 							</section>
 						</div>
-						<!-- Mail Column -->
 						<div class="col-4 col-12-medium">
 							<section>
 								<header>
@@ -99,16 +92,13 @@
 								<p><a href="mailto:aravindakrishnanv@tutamail.com">aravindakrishnanv@tutamail.com</a></p>
 							</section>
 						</div>
-						<!-- Connect Column -->
 						<div class="col-4 col-12-medium">
 							<section>
 								<header>
 									<h2>Connect</h2>
 								</header>
 								<div class="connect-icons">
-									<!-- LinkedIn -->
 									<a class="icon brands fa-linkedin-in" href="https://www.linkedin.com/in/aravindakrishnan-v-2b0651218"><span class="label">LinkedIn</span></a>
-									<!-- GitHub -->
 									<a class="icon brands fa-github" href="https://github.com/arkhiVd"><span class="label">GitHub</span></a>
 								</div>
 							</section>
@@ -116,7 +106,6 @@
 					</div>
 					<div class="row">
 						<div class="col-12">
-							<!-- Copyright -->
 							<div id="copyright">
 								<ul class="links">
 									<li>&copy; Aravindakrishnan V. All rights reserved.</li>
@@ -129,12 +118,10 @@
 		</div>
 
 		<!-- Scripts -->
-		<script src="assets/js/visitorscript.js"></script>
 		<script src="assets/js/jquery.min.js"></script>
-		<script src="assets/js/jquery.dropotron.min.js"></script>
-		<script src="assets/js/browser.min.js"></script>
-		<script src="assets/js/breakpoints.min.js"></script>
-		<script src="assets/js/util.js"></script>
+		<script src="assets/js/nav-panel.js"></script>
 		<script src="assets/js/main.js"></script>
+		<script src="assets/js/visitorscript.js"></script>
+
 	</body>
 </html>

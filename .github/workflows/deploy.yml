@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
 
 permissions:
   id-token: write
@@ -22,13 +23,10 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: arn:aws:iam::615201069679:role/GitHubActions_PortfolioFrontend_Role
-          aws-region: us-east-1
-
+          aws-region: ap-south-1 
 
       - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v4
-        with:
-          terraform_wrapper: true
+        uses: hashicorp/setup-terraform@v3
 
       - name: Terraform Init
         run: terraform init
@@ -39,19 +37,17 @@ jobs:
       - name: Terraform Apply
         run: terraform apply -auto-approve -input=false
 
-
       - name: Capture Terraform Outputs
         id: tf_outputs
-        run: terraform output -json
-
- 
+        run: |
+          echo "tf_output=$(terraform output -json)" >> $GITHUB_ENV
 
       - name: Sync Website Files to S3
         run: |
-          BUCKET_NAME=$(echo '${{ steps.tf_outputs.outputs.stdout }}' | jq -r '.s3_bucket_name.value')
+          BUCKET_NAME=$(echo "$tf_output" | jq -r '.s3_bucket_name.value')
           aws s3 sync my-website-files/ s3://$BUCKET_NAME --delete
       
       - name: Invalidate CloudFront Cache
         run: |
-          DISTRIBUTION_ID=$(echo '${{ steps.tf_outputs.outputs.stdout }}' | jq -r '.cloudfront_distribution_id.value')
+          DISTRIBUTION_ID=$(echo "$tf_output" | jq -r '.cloudfront_distribution_id.value')
           aws cloudfront create-invalidation --distribution-id $DISTRIBUTION_ID --paths "/*"

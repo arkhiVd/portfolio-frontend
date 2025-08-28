@@ -37,8 +37,11 @@ jobs:
       - name: Terraform Apply
         run: terraform apply -auto-approve -input=false
 
+      - name: Get S3 Bucket Name
+        id: get_bucket_name 
+        run: |
+          echo "bucket_name=$(terraform output -raw website_bucket_name)" >> $GITHUB_OUTPUT
+      
       - name: Sync Website Files to S3
         run: |
-          BUCKET_NAME=$(echo "$tf_output" | jq -r '.s3_bucket_name.value')
-          aws s3 sync my-website-files/ s3://$BUCKET_NAME --delete
-      
+          aws s3 sync . s3://$(terraform output -raw website_bucket_name) --delete

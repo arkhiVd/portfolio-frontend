@@ -36,12 +36,7 @@ jobs:
 
       - name: Terraform Apply
         run: terraform apply -auto-approve -input=false
-
-      - name: Get S3 Bucket Name
-        id: get_bucket_name 
-        run: |
-          echo "bucket_name=$(terraform output -raw website_bucket_name)" >> $GITHUB_OUTPUT
       
-      - name: Sync Website Files to S3
+      - name: Invalidate CloudFront Cache
         run: |
-          aws s3 sync . s3://$(terraform output -raw website_bucket_name) --delete
+          aws cloudfront create-invalidation --distribution-id $(terraform output -raw cloudfront_distribution_id) --paths "/*"

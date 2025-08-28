@@ -8,7 +8,7 @@ terraform {
   }
 }
 provider "aws" {
-  region = "ap-south-2"
+  region = var.aws_region
 }
 provider "aws" {
   alias  = "us-east-1"
@@ -16,9 +16,9 @@ provider "aws" {
 }
 terraform {
   backend "s3" {
-    bucket = "aravind-terraform-state-bucket"
+    bucket = "aravind-terraform-state-bucket-ap-south-1"
     key    = "portfolio-frontend/terraform.tfstate"
-    region = "ap-south-2"
+    region = "ap-south-1"                                
   }
 }
 # file extensions to MIME types

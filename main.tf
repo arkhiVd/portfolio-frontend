@@ -37,6 +37,9 @@ locals {
 # tfsec:ignore:aws-s3-enable-versioning
 resource "aws_s3_bucket" "portfolio_bucket" {
   bucket = var.bucketname
+  timeouts {
+    create = "5m"
+  }
 }
 # tfsec:ignore:aws-s3-encryption-customer-key
 resource "aws_s3_bucket_server_side_encryption_configuration" "portfolio_bucket_encryption" {

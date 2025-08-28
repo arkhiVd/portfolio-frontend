@@ -202,3 +202,11 @@ resource "aws_route53_record" "root_alias" {
     evaluate_target_health = false
   }
 }
+
+output "s3_bucket_name" {
+  value = aws_s3_bucket.portfolio_bucket.bucket
+}
+
+output "cloudfront_distribution_id" {
+  value = aws_cloudfront_distribution.portfolio_cdn.id
+}

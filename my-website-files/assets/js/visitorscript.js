@@ -1,6 +1,6 @@
 window.addEventListener('DOMContentLoaded', (event) => {
 
-  const invokeURL = "https://a4mif6uld5.execute-api.ap-south-2.amazonaws.com/prod/visitors";
+  const invokeURL = "https://863novc21g.execute-api.ap-south-1.amazonaws.com/prod";
   fetch(invokeURL, { method: 'POST' })
     .then(response => response.json())
     .then(data => {

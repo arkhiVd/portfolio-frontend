@@ -37,17 +37,8 @@ jobs:
       - name: Terraform Apply
         run: terraform apply -auto-approve -input=false
 
-      - name: Capture Terraform Outputs
-        id: tf_outputs
-        run: |
-          echo "tf_output=$(terraform output -json)" >> $GITHUB_ENV
-
       - name: Sync Website Files to S3
         run: |
           BUCKET_NAME=$(echo "$tf_output" | jq -r '.s3_bucket_name.value')
           aws s3 sync my-website-files/ s3://$BUCKET_NAME --delete
       
-      - name: Invalidate CloudFront Cache
-        run: |
-          DISTRIBUTION_ID=$(echo "$tf_output" | jq -r '.cloudfront_distribution_id.value')
-          aws cloudfront create-invalidation --distribution-id $DISTRIBUTION_ID --paths "/*"

@@ -1,128 +1,152 @@
 <!DOCTYPE HTML>
-<!--
-	Portfolio Homepage
--->
-<html>
-	<head>
-		<title>Portfolio - AV</title>
-		<meta charset="utf-8" />
-		<meta name="robots" content="noindex, nofollow">
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-		<link rel="stylesheet" href="assets/css/main.css" />
-	</head>
-	<body class="is-homepage no-sidebar is-preload">
-		<div id="page-wrapper">
+<html lang="en">
+<head>
+    <title>Portfolio - AV</title>
+    <meta charset="utf-8" />
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- DevIcons -->
+    <link rel="stylesheet" type='text/css' href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="text-white antialiased">
 
-			<!-- Header -->
-			<!--<section id="header">
-				<h1><a href="index.html">Aravindakrishnan V</a></h1>
-				<nav id="nav">
-					<ul>
-					</ul>
-				</nav>
-			</section>-->
+    <!-- Navigation -->
+    <nav id="header" class="w-full z-50 transition-all duration-300">
+        <div class="container mx-auto px-6 py-3 flex justify-between items-center">
+            <!-- Logo -->
+            <a href="index.html" class="text-3xl transition-transform hover:scale-110">
+                <i class="fas fa-cloud bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500 glow-icon"></i>
+            </a>
+            
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="index.html" class="text-cyan-400 font-semibold border-b-2 border-cyan-400">Home</a>
+                <a href="projects.html" class="hover:text-cyan-400 transition-colors">Projects</a>
+                <a href="about.html" class="hover:text-cyan-400 transition-colors">About</a>
+                <div class="visitor-badge glass px-3 py-1 rounded-full border border-white/10">
+                    <i class="fas fa-eye text-cyan-400"></i>
+                    <span>Views:</span>
+                    <span id="visitor-count" class="font-mono font-bold">...</span>
+                </div>
+            </div>
 
-			<!-- Main -->
-			<section id="main">
-				<div class="container">  
-					<div class="hero-box">
-						<!-- Profile Picture -->
-						<div class="profile-pic">
-							<img src="images/profile.jpeg" alt="Aravindakrishnan V" />
-						</div>
+            <!-- Mobile Menu Button -->
+            <button id="menu-toggle" class="md:hidden text-2xl focus:outline-none">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
 
-						<!-- Introduction Text -->
-						<header class="hero-header">
-							<h2>Hello, I'm Aravindakrishnan V.</h2>
-							<p>
-								I am focusing my passion on a career in cloud and DevOps. I specialize in building scalable infrastructure and automating solutions.
-							</p>
-						</header>
+        <!-- Mobile Menu -->
+        <div id="nav-menu" class="hidden flex-col md:hidden glass absolute w-full left-0 top-full mt-2 p-4 space-y-4 text-center border-t border-white/10">
+            <a href="index.html" class="block text-cyan-400 font-semibold">Home</a>
+            <a href="projects.html" class="block hover:text-cyan-400 transition-colors">Projects</a>
+            <a href="about.html" class="block hover:text-cyan-400 transition-colors">About</a>
+        </div>
+    </nav>
 
-						<!-- Navigation Buttons -->
-						<footer class="hero-footer">
-							<ul class="actions">
-								<li><a href="projects.html" class="button alt large">View Projects</a></li>
-								<li><a href="education.html" class="button alt large">Education & Skills</a></li>
-							</ul>
-							<div class="visitor-badge">
-								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
-								<span>Total Views:</span>
-								<span id="visitor-count">...</span>
-							</div>
-						</footer>
-					</div>
-				</div> 
-			</section>
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 pt-32 pb-12">
+        <div class="glass p-8 md:p-12 max-w-4xl mx-auto text-center transform hover:scale-[1.01] transition-transform duration-300 relative overflow-hidden">
+            <!-- Profile Picture -->
+            <div class="mb-8 relative z-10">
+                <img src="images/profile.jpeg" alt="Aravindakrishnan V" class="w-48 h-48 rounded-full mx-auto border-4 border-cyan-500/30 shadow-[0_0_30px_rgba(6,182,212,0.3)] object-cover" />
+            </div>
 
-			<!-- Footer -->
-			<section id="footer">
-				<div class="container">
-					<div class="row">
-						<!-- Get In Touch -->
-						<div class="col-4 col-12-medium">
-							<section>
-								<header>
-									<h2>Get In Touch</h2>
-								</header>
-								<p>
-									I am actively seeking new opportunities and would love to connect. Please feel free to reach out.
-								</p>
-							</section>
-						</div>
-						<!-- Mail  -->
-						<div class="col-4 col-12-medium">
-							<section>
-								<header>
-									<h2>Mail</h2>
-								</header>
-								<p><a href="mailto:aravindakrishnanv@tutamail.com">aravindakrishnanv@tutamail.com</a></p>
-							</section>
-						</div>
-						<!-- Connect -->
-						<div class="col-4 col-12-medium">
-							<section>
-								<header>
-									<h2>Connect</h2>
-								</header>
-								<div class="connect-icons">
-								<!-- LinkedIn SVG Icon -->
-								<a href="https://www.linkedin.com/in/aravindakrishnan-v-2b0651218" target="_blank">
-									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-										<title>LinkedIn</title>
-										<path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
-									</svg>
-								</a>
-								<!-- GitHub SVG Icon -->
-								<a href="https://github.com/arkhiVd" target="_blank">
-									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-										<title>GitHub</title>
-										<path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-									</svg>
-								</a>
-							</div>
-							</section>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-12">
-							<!-- Copyright -->
-							<div id="copyright">
-								<ul class="links">
-									<li>&copy; Aravindakrishnan V. All rights reserved.</li>
-								</ul>
-							</div>
-						</div>
-					</div>
-				</div>
-			</section>
-		</div>
+            <!-- Introduction -->
+            <div class="relative z-10">
+                <h1 class="font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-purple-500 whitespace-nowrap" style="font-size: clamp(2rem, 5vw, 4rem);">
+                    Hello, I'm Aravind
+                </h1>
+                <p class="text-xl md:text-2xl text-gray-300 mb-10 leading-relaxed max-w-2xl mx-auto">
+                    I specialize in building scalable infrastructure and automating solutions.
+                </p>
 
-		<!-- Scripts -->
-		<script src="assets/js/jquery.min.js"></script>
-		<script src="assets/js/nav-panel.js"></script>
-		<script src="assets/js/main.js"></script>
-		<script src="assets/js/visitorscript.js"></script>
-	</body>
+                <!-- Actions -->
+                <div class="flex flex-col md:flex-row justify-center gap-6 mb-12">
+                    <a href="projects.html" class="px-8 py-3 bg-cyan-600 hover:bg-cyan-700 rounded-full font-semibold transition-all shadow-lg hover:shadow-cyan-500/50">
+                        View Projects
+                    </a>
+                    <a href="about.html" class="px-8 py-3 bg-transparent border-2 border-cyan-400 hover:bg-cyan-400/10 rounded-full font-semibold transition-all">
+                        About Me
+                    </a>
+                </div>
+            </div>
+
+            <!-- Tech Marquee -->
+            <div class="marquee-container mt-8 py-4 border-t border-white/5">
+                <div class="marquee-track">
+                    <!-- Original Set -->
+                    <i class="devicon-amazonwebservices-plain-wordmark text-4xl text-orange-400"></i>
+                    <i class="devicon-docker-plain text-4xl text-blue-400"></i>
+                    <i class="devicon-terraform-plain text-4xl text-purple-400"></i>
+                    <i class="devicon-python-plain text-4xl text-yellow-300"></i>
+                    <i class="devicon-linux-plain text-4xl text-white"></i>
+                    <i class="devicon-github-original text-4xl text-white"></i>
+                    <i class="devicon-git-plain text-4xl text-red-500"></i>
+                    
+                    <!-- Duplicate Set for Seamless Loop -->
+                    <i class="devicon-amazonwebservices-plain-wordmark text-4xl text-orange-400"></i>
+                    <i class="devicon-docker-plain text-4xl text-blue-400"></i>
+                    <i class="devicon-terraform-plain text-4xl text-purple-400"></i>
+                    <i class="devicon-python-plain text-4xl text-yellow-300"></i>
+                    <i class="devicon-linux-plain text-4xl text-white"></i>
+                    <i class="devicon-github-original text-4xl text-white"></i>
+                    <i class="devicon-git-plain text-4xl text-red-500"></i>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="container mx-auto px-6 py-12">
+        <div class="glass p-8 border-t border-white/10">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                <!-- Get In Touch -->
+                <div>
+                    <h3 class="text-xl font-bold mb-4 text-cyan-400">Get In Touch</h3>
+                    <p class="text-gray-400">
+                        I am actively seeking new opportunities and would love to connect. Please feel free to reach out.
+                    </p>
+                </div>
+
+                <!-- Mail -->
+                <div>
+                    <h3 class="text-xl font-bold mb-4 text-cyan-400">Mail</h3>
+                    <a href="mailto:aravindakrishnanv@tutamail.com" class="text-gray-300 hover:text-white transition-colors">
+                        aravindakrishnanv@tutamail.com
+                    </a>
+                </div>
+
+                <!-- Connect -->
+                <div>
+                    <h3 class="text-xl font-bold mb-4 text-cyan-400">Connect</h3>
+                    <div class="flex justify-center space-x-6">
+                        <a href="https://www.linkedin.com/in/aravindakrishnan-v-2b0651218" target="_blank" class="text-3xl text-gray-400 hover:text-blue-500 transition-colors">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="https://github.com/arkhiVd" target="_blank" class="text-3xl text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-github"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-12 text-center text-gray-600 text-xs">
+                Designed & Built by Aravindakrishnan V.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/visitorscript.js"></script>
+</body>
 </html>

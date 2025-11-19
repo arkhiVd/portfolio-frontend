@@ -1,36 +1,23 @@
-(function($) {
-    const $window = $(window);
-    const $body = $('body');
+document.addEventListener('DOMContentLoaded', () => {
+    const header = document.getElementById('header');
+    const nav = document.getElementById('nav');
+    const menuToggle = document.getElementById('menu-toggle');
+    const navMenu = document.getElementById('nav-menu');
 
-    $window.on('load', function() {
-        window.setTimeout(function() {
-            $body.removeClass('is-preload');
-        }, 100);
+    // Sticky Header Logic
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 10) {
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
+        }
     });
 
-    const $titleBar = $(
-        '<div id="titleBar">' +
-            '<a href="#navPanel" class="toggle"></a>' +
-        '</div>'
-    ).appendTo($body);
-
-    const $navPanel = $(
-        '<div id="navPanel">' +
-            '<nav>' +
-                $('#nav').generateNavList() + 
-            '</nav>' +
-        '</div>'
-    )
-    .appendTo($body)
-    .initPanel({ 
-        delay: 500,
-        hideOnClick: true,
-        hideOnSwipe: true,
-        resetScroll: true,
-        resetForms: true,
-        side: 'left',
-        target: $body,
-        visibleClass: 'navPanel-visible'
-    });
-
-})(jQuery);
+    // Mobile Menu Logic
+    if (menuToggle && navMenu) {
+        menuToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('hidden');
+            navMenu.classList.toggle('flex'); // Toggle flex to show
+        });
+    }
+});
